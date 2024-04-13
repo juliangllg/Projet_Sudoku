@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import javax.swing.border.LineBorder;
 
 public class grille extends JComponent{
 
@@ -12,10 +13,11 @@ public class grille extends JComponent{
 		/*paramètre de base de la fenetre*/
 		JFrame fenetre = new JFrame();
 		fenetre.setSize(900, 900);
+		fenetre.setResizable(false);
 	    fenetre.setLocationRelativeTo(null);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    /*creation grille*/
-	    GridLayout gestionnaire = new GridLayout(9, 9);
+	    GridLayout gestionnaire = new GridLayout(9,9,-2,-2);
 		fenetre.setLayout(gestionnaire);
 
 
@@ -29,11 +31,13 @@ public class grille extends JComponent{
 	        for (int j = 0; j < 9; j++) {
 	            if ((grid_values[i][j]) == 0) {
 		            case_modifiable[i][j] = new JTextField("", 1);
+		            case_modifiable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 		            case_modifiable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
 		            case_modifiable[i][j].setHorizontalAlignment(JTextField.CENTER);
 		            fenetre.add(case_modifiable[i][j]);
 	            } else {
 	            	case_depart[i][j] = new JLabel(String.valueOf(grid_values[i][j]));
+	            	case_depart[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 	            	case_depart[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
 	            	case_depart[i][j].setHorizontalAlignment(JTextField.CENTER);
 	            	fenetre.add(case_depart[i][j]);
