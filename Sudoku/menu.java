@@ -82,6 +82,13 @@ public class menu {
             }
         });
 
+        editer.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e4){
+                        fenetre.dispose();
+                        grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true);
+                    }
+                });
+
         lancer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e2) {
             	if(cheminFichier != null){
