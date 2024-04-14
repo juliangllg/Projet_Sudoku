@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Arrays;
 
 public class menu {
 
@@ -84,8 +85,15 @@ public class menu {
 
         editer.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent e4){
-                        fenetre.dispose();
-                        grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true);
+                        if (cheminFichier != null){
+                            int[][] grille_vide = new int[9][9];
+                            Arrays.fill(grille_vide, 0);
+                            fenetre.dispose();
+                            grille.AfficherGrille(grille_vide, true);
+                        }else{
+                            fenetre.dispose();
+                            grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true);
+                        }
                     }
                 });
 
