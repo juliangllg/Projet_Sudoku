@@ -46,8 +46,10 @@ public class menu {
         fenetre.add(ligne3, BorderLayout.CENTER);
 
         JPanel ligne4 = new JPanel();
+        JButton editer = new JButton("Editer");
         JButton lancer = new JButton("Lancer");
         JButton quitter = new JButton("Quitter");
+        ligne4.add(editer);
         ligne4.add(lancer);
         ligne4.add(quitter);
         fenetre.add(ligne4, BorderLayout.CENTER);
@@ -85,9 +87,9 @@ public class menu {
             	if(cheminFichier != null){
                     if (ResolutionManuel == true) {
 	            	   fenetre.dispose();
-                       grille.AfficherGrille(grille.ChargerGrille(cheminFichier));
+                       grille.AfficherGrille(grille.ChargerGrille(cheminFichier),false);
                     } else {
-                        grille.AfficherGrille(resolveurGrille.resoudreGrille(grille.ChargerGrille(cheminFichier)));
+                        grille.AfficherGrille(resolveurGrille.resoudreGrille(grille.ChargerGrille(cheminFichier)),false);
                     }
                 } else {
                 	InfoLogiciel.setText(" Info : Erreur : Veuillez selectionner un fichier .gri");

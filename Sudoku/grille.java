@@ -9,7 +9,7 @@ public class grille extends JComponent{
 	public static int[][] grid_values = null; 
 
 	/*fonction pour afficher graphiquement la grille*/
-	public static void AfficherGrille (int[][] grille) {
+	public static void AfficherGrille (int[][] grille, boolean editable) {
 		/*paramètre de base de la fenetre*/
 		JFrame fenetre = new JFrame();
 		fenetre.setSize(900, 900);
@@ -20,6 +20,21 @@ public class grille extends JComponent{
 	    GridLayout gestionnaire = new GridLayout(9,9,-2,-2);
 		fenetre.setLayout(gestionnaire);
 
+		if(editable){
+			JTextField[][] case_editable = null;
+			case_editable = new JTextField[9][9];
+			for (int i = 0; i < 9; i++) {
+		        for (int j = 0; j < 9; j++) {
+		            if ((grid_values[i][j]) == 0) {
+			            case_editable[i][j] = new JTextField("", 1);
+			            case_editable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
+			            case_editable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
+			            case_editable[i][j].setHorizontalAlignment(JTextField.CENTER);
+			            fenetre.add(case_editable[i][j]);
+					}
+				}
+			}
+		}
 
 	    /*affichage de la grille*/
 		JTextField[][] case_modifiable = null;
@@ -49,6 +64,7 @@ public class grille extends JComponent{
 
 	    /*System.out.println(grid[0][0].getText());*/
 	} 
+
 
 	/*fonction pour passer d'un fichier.gri à un tableau de valeur*/
 	public static int[][] ChargerGrille(String cheminFichier){
