@@ -12,13 +12,17 @@ public class grille extends JComponent{
 	public static void AfficherGrille (int[][] grille, boolean editable) {
 		/*paramètre de base de la fenetre*/
 		JFrame fenetre = new JFrame();
-		fenetre.setSize(900, 900);
+		fenetre.setSize(900, 1100);
 		fenetre.setResizable(false);
 	    fenetre.setLocationRelativeTo(null);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		/*Panneau pour la grille */
+		JPanel place_grille = new JPanel();
+		place_grille.setSize(900,900);
+		
 	    /*creation grille*/
 	    GridLayout gestionnaire = new GridLayout(9,9,-2,-2);
-		fenetre.setLayout(gestionnaire);
+		place_grille.setLayout(gestionnaire);
 
 		if(editable){
 			JTextField[][] case_editable = null;
@@ -33,7 +37,7 @@ public class grille extends JComponent{
 		            case_editable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 		            case_editable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
 		            case_editable[i][j].setHorizontalAlignment(JTextField.CENTER);
-		            fenetre.add(case_editable[i][j]);
+		            place_grille.add(case_editable[i][j]);
 			    }
 			}
 		}else{
@@ -51,17 +55,22 @@ public class grille extends JComponent{
 			            case_modifiable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 			            case_modifiable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
 			            case_modifiable[i][j].setHorizontalAlignment(JTextField.CENTER);
-			            fenetre.add(case_modifiable[i][j]);
+			            place_grille.add(case_modifiable[i][j]);
 		            } else {
 		            	case_depart[i][j] = new JLabel(String.valueOf(grid_values[i][j]));
 		            	case_depart[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 		            	case_depart[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
 		            	case_depart[i][j].setHorizontalAlignment(JTextField.CENTER);
-		            	fenetre.add(case_depart[i][j]);
+		            	place_grille.add(case_depart[i][j]);
 		            }
 		        }
 		    }
 		}
+		JPanel bouton_grille = new JPanel();
+		bouton_grille.setSize(900,200);
+		JButton verifier = new JButton("verifier");
+		bouton_grille.add(verifier);
+		fenetre.add(bouton_grille,BorderLayout.SOUTH);
 		/*affichage fenetre*/
 		fenetre.setVisible(true);
 
