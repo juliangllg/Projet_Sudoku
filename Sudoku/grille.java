@@ -25,10 +25,10 @@ public class grille extends JComponent{
 			case_editable = new JTextField[9][9];
 			for (int i = 0; i < 9; i++) {
 		        for (int j = 0; j < 9; j++) {
-		        	if (grid_values[i][j] == 0){
+		        	if (grille[i][j] == 0){
 		        		case_editable[i][j] = new JTextField("", 1);
 		        	}else{
-			            case_editable[i][j] = new JTextField(String.valueOf(grid_values[i][j]), 1);
+			            case_editable[i][j] = new JTextField(String.valueOf(grille[i][j]), 1);
 			        }
 		            case_editable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
 		            case_editable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));

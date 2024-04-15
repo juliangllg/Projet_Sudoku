@@ -84,18 +84,25 @@ public class menu {
         });
 
         editer.addActionListener(new ActionListener(){
-                    public void actionPerformed(ActionEvent e4){
-                        if (cheminFichier != null){
-                            int[][] grille_vide = new int[9][9];
-                            Arrays.fill(grille_vide, 0);
-                            fenetre.dispose();
-                            grille.AfficherGrille(grille_vide, true);
-                        }else{
-                            fenetre.dispose();
-                            grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true);
+            public void actionPerformed(ActionEvent e4){
+                if (cheminFichier == null){
+                    int[][] grille_vide = null;
+                    grille_vide = new int[9][9];
+
+                    for (int i = 0; i < 9; i++) {
+                        for (int j = 0; j < 9 ; j++ ) {
+                            grille_vide[i][j] = 0;   
                         }
                     }
-                });
+
+                    fenetre.dispose();
+                    grille.AfficherGrille(grille_vide, true);
+                }else{
+                    fenetre.dispose();
+                    grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true);
+                }
+            }
+        });
 
         lancer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e2) {
@@ -121,7 +128,7 @@ public class menu {
 
         manuel.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e1) {
                 ResolutionManuel = true;
             }
         });
