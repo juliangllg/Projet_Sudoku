@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.Arrays;
+
 
 public class menu {
 
@@ -13,7 +13,7 @@ public class menu {
         /*fenetre*/
         JFrame fenetre = new JFrame();
         fenetre.setSize(500, 250);
-        fenetre.setTitle("Sudoku Resolver (By Wilfried BRIGITTE)");
+        fenetre.setTitle("Sudoku Resolver (By Wilfried BRIGITTE & Julian GALLEGO)");
         fenetre.setResizable(false);
         fenetre.setLocationRelativeTo(null);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
