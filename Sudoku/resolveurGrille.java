@@ -17,7 +17,7 @@ public class resolveurGrille {
         return solution;
     }
 
-    private static void resoudreSudoku(int[][] grille) {
+    private static boolean resoudreSudoku(int[][] grille) {
         /*parcourage la grille*/
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
@@ -28,12 +28,12 @@ public class resolveurGrille {
                             grille[row][col] = num;
                             resoudreSudoku(grille);
                             if (stop) {
-                                return;
+                                return true;
                             }
                             grille[row][col] = 0; /*réinitialiser la case si la solution n'est pas trouvée*/
                         }
                     }
-                    return; /* Si aucune solution trouvée à cette étape on s'arrêtee*/
+                    return false; /* Si aucune solution trouvée à cette étape on s'arrêtee*/
                 }
             }
         }
@@ -42,7 +42,7 @@ public class resolveurGrille {
         for (int i = 0; i < 9; i++) {
             System.arraycopy(grille[i], 0, solution[i], 0, 9);
         }
-        stop = true;
+        return stop = true;
     }
 
     /*Méthode pour vérifier la validité d'un chiffre dans une case donnée*/

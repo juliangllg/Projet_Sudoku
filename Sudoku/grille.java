@@ -1,7 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import javax.swing.border.LineBorder;
+import javax.swing.text.*;
 
 public class grille extends JComponent{
 
@@ -68,13 +71,23 @@ public class grille extends JComponent{
 		}
 		JPanel bouton_grille = new JPanel();
 		bouton_grille.setSize(900,200);
+		bouton_grille.setLayout(new BorderLayout());
 		JButton verifier = new JButton("verifier");
 		bouton_grille.add(verifier);
 		fenetre.add(bouton_grille,BorderLayout.SOUTH);
+		fenetre.add(place_grille, BorderLayout.CENTER);
 		/*affichage fenetre*/
 		fenetre.setVisible(true);
 
 		/*System.out.println(grid[0][0].getText());*/
+
+		verifier.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent verifier) {
+			
+			}
+		});
+
+
 	} 
 
 
@@ -113,5 +126,20 @@ public class grille extends JComponent{
 		}
 
 		return null;
+	}
+
+	class LimitJTextField extends PlainDocument {
+	private int max;
+	LimitJTextField(int max) {
+		super();
+		this.max = max;
+		}
+		public void insertString(int offset, String text, AttributeSet attr) throws BadLocationException {
+			if (text == null)
+				return;
+			if ((getLength() + text.length()) <= max) {
+				super.insertString(offset, text, attr);
+			}
+		}
 	}
 }
