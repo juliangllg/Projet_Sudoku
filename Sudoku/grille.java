@@ -15,8 +15,8 @@ public class grille extends JComponent{
 	public static void AfficherGrille (int[][] grille, boolean editable) {
 		/*paramètre de base de la fenetre*/
 		JFrame fenetre = new JFrame();
-		fenetre.setSize(900, 1100);
-		fenetre.setResizable(false);
+		fenetre.setSize(900, 950);
+		/*fenetre.setResizable(false);*/
 	    fenetre.setLocationRelativeTo(null);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/*Panneau pour la grille */
@@ -126,20 +126,5 @@ public class grille extends JComponent{
 		}
 
 		return null;
-	}
-
-	class LimitJTextField extends PlainDocument {
-	private int max;
-	LimitJTextField(int max) {
-		super();
-		this.max = max;
-		}
-		public void insertString(int offset, String text, AttributeSet attr) throws BadLocationException {
-			if (text == null)
-				return;
-			if ((getLength() + text.length()) <= max) {
-				super.insertString(offset, text, attr);
-			}
-		}
 	}
 }
