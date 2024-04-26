@@ -8,13 +8,13 @@ JVMFLAGS =
 
 ### REGLES ESSENTIELLES ###
 
-main.class : main.java menu.class
+main.class : mainProgramme2.java menuProgramme2.class
 	${JC} ${JCFLAGS} main.java
 
 grille.class : grille.java resolveurGrille.class 
 	${JC} ${JCFLAGS} grille.java
 
-menu.class : menu.java resolveurGrille.class grille.class
+menu.class : menuProgramme2.java resolveurGrille.class grille.class
 	${JC} ${JCFLAGS} menu.java
 
 resolveurGrille.class : resolveurGrille.java
@@ -22,13 +22,13 @@ resolveurGrille.class : resolveurGrille.java
 
 ### REGLES OPTIONNELLES ###
 
-run : main.class
+run : mainProgramme2.class
 	${JVM} ${JVMFLAGS} main
 
 clean :
 	-rm -f *.class
 
-mrproper : clean main.class
+mrproper : clean mainProgramme2.class
 
 ### BUTS FACTICES ###
 

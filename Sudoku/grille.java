@@ -69,13 +69,16 @@ public class grille extends JComponent{
 		        }
 		    }
 		}
+
+		/*bouton(s) grille(s)*/
 		JPanel bouton_grille = new JPanel();
-		bouton_grille.setSize(900,200);
+		bouton_grille.setSize(300,200);
 		bouton_grille.setLayout(new BorderLayout());
 		JButton verifier = new JButton("verifier");
 		bouton_grille.add(verifier);
 		fenetre.add(bouton_grille,BorderLayout.SOUTH);
 		fenetre.add(place_grille, BorderLayout.CENTER);
+
 		/*affichage fenetre*/
 		fenetre.setVisible(true);
 
@@ -126,5 +129,9 @@ public class grille extends JComponent{
 		}
 
 		return null;
+	}
+
+	public static void ExporterGrille(int[][] grille){
+
 	}
 }
