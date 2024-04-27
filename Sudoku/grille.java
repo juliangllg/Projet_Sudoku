@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import javax.swing.border.LineBorder;
+import javax.swing.border.Border;
 import javax.swing.text.*;
 
 public class grille extends JComponent{
@@ -30,20 +30,29 @@ public class grille extends JComponent{
 		if(editable){
 			JTextField[][] case_editable = null;
 			case_editable = new JTextField[9][9];
-			for (int i = 0; i < 9; i++) {
-		        for (int j = 0; j < 9; j++) {
-		        	if (grille[i][j] == 0){
-		        		case_editable[i][j] = new JTextField("", 1);
+			for (int ligne = 0; ligne < 9; ligne++) {
+		        for (int col = 0; col < 9; col++) {
+		        	if (grille[ligne][col] == 0){
+		        		case_editable[ligne][col] = new JTextField("", 1);
 		        	}else{
-			            case_editable[i][j] = new JTextField(String.valueOf(grille[i][j]), 1);
+			            case_editable[ligne][col] = new JTextField(String.valueOf(grille[ligne][col]), 1);
 			        }
-		            case_editable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
-		            case_editable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
-		            case_editable[i][j].setHorizontalAlignment(JTextField.CENTER);
-		            place_grille.add(case_editable[i][j]);
-			    }
+		            case_editable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
+		            case_editable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
+		            if ((ligne % 3 == 0) && (ligne != 0) && (col % 3 == 0) && (col != 0)){
+	            		case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
+		            } else if((ligne % 3 == 0) && (ligne != 0)){
+		            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
+		            } else if ((col % 3 == 0) && (col != 0)){
+		            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
+		            } else {
+		            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
+		            }
+		            place_grille.add(case_editable[ligne][col]);
+				}
 			}
-		}else{
+ 		        
+		} else {
 
 		    /*affichage de la grille*/
 			JTextField[][] case_modifiable = null;
@@ -51,20 +60,36 @@ public class grille extends JComponent{
 			case_depart = new JLabel[9][9];
 			case_modifiable = new JTextField[9][9];
 
-		    for (int i = 0; i < 9; i++) {
-		        for (int j = 0; j < 9; j++) {
-		            if ((grid_values[i][j]) == 0) {
-			            case_modifiable[i][j] = new JTextField("", 1);
-			            case_modifiable[i][j].setBorder(new LineBorder(Color.BLACK, 5));
-			            case_modifiable[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
-			            case_modifiable[i][j].setHorizontalAlignment(JTextField.CENTER);
-			            place_grille.add(case_modifiable[i][j]);
+		    for (int ligne = 0; ligne < 9; ligne++) {
+		        for (int col = 0; col < 9; col++) {
+		            if ((grid_values[ligne][col]) == 0) {
+			            case_modifiable[ligne][col] = new JTextField("", 1);
+			            case_modifiable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
+			            case_modifiable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
+			            if ((ligne % 3 == 0) && (ligne != 0)){
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
+			            } else if ((col % 3 == 0) && (col != 0)){
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
+			            } else if ((ligne % 3 == 0) && (ligne != 0) && (col % 3 == 0) && (col != 0)){
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
+			            }else {
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
+			            }
+			            place_grille.add(case_modifiable[ligne][col]);
 		            } else {
-		            	case_depart[i][j] = new JLabel(String.valueOf(grid_values[i][j]));
-		            	case_depart[i][j].setBorder(new LineBorder(Color.BLACK, 5));
-		            	case_depart[i][j].setFont(new Font("Arial", Font.PLAIN, 30));
-		            	case_depart[i][j].setHorizontalAlignment(JTextField.CENTER);
-		            	place_grille.add(case_depart[i][j]);
+		            	case_depart[ligne][col] = new JLabel(String.valueOf(grid_values[ligne][col]));
+		            	case_depart[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
+		            	case_depart[ligne][col].setHorizontalAlignment(JTextField.CENTER);
+		            	if ((ligne % 3 == 0) && (ligne != 0)){
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
+			            } else if ((col % 3 == 0) && (col != 0)){
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
+			            } else if ((ligne % 3 == 0) && (ligne != 0) && (col % 3 == 0) && (col != 0)){
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
+			            } else {
+			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
+			            }
+		            	place_grille.add(case_depart[ligne][col]);
 		            }
 		        }
 		    }
