@@ -173,12 +173,37 @@ public class grille extends JComponent{
 	}
 
 	public static void ExporterGrille(int[][] grille){
-		for (int i = 0; i < grille.length; i++) {
-        	for (int j = 0; j < grille[i].length; j++) {
-            	System.out.print(grille[i][j] + " ");
-        	}
-        	System.out.println(); 
-    	}
+
+		try {
+            JFileChooser filechooser2 = new JFileChooser();
+            filechooser2.setCurrentDirectory(new File("./grille"));
+            int result2 = filechooser2.showOpenDialog(null);
+            if (result2 == JFileChooser.APPROVE_OPTION) {
+            	File selectedFile2 = filechooser2.getSelectedFile();
+            	FileOutputStream fs2 = new FileOutputStream(selectedFile2.getAbsolutePath());
+				DataOutputStream fichier2 = new DataOutputStream(fs2);
+
+				String ligne_a_ecrire = "";
+				int entier_a_ecrire = 0;
+				for (int i = 0; i < 9; i++) {
+					for (int j = 0; j < 9; j++){
+						ligne_a_ecrire = ligne_a_ecrire+String.valueOf(grille[i][j]);
+					}
+                    entier_a_ecrire = Integer.parseInt(ligne_a_ecrire);
+	            	System.out.print(entier_a_ecrire +"\n");
+	            	fichier2.writeInt(entier_a_ecrire);
+	            	ligne_a_ecrire = "";
+            	}
+
+            	try {
+            		fs2.close();
+            	}catch(IOException e){
+	        		System.err.println("erreur fermeture du fichier");
+	        	}	
+            }
+		}catch(IOException e) {
+            System.err.println("Erreur ouverture du fichier");
+		}
 	}
 
 	public static int[][] ConvertirGrilleActuelle(JPanel place_grille){
