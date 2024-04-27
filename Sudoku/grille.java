@@ -7,6 +7,7 @@ import javax.swing.border.Border;
 import javax.swing.text.*;
 
 public class grille extends JComponent{
+	private static JLabel etat_exportation = new JLabel();
 
 	/*tableau de valeurs de la grille de sudoku*/
 	public static int[][] grid_values = null; 
@@ -99,11 +100,15 @@ public class grille extends JComponent{
 		JButton exporter = null;
 		JPanel bouton_grille = new JPanel();
 
+
 		if(editable){
+			
+			bouton_grille.add(etat_exportation);
 			exporter = new JButton("exporter");
 			bouton_grille.add(exporter);
 			place_grille.add(bouton_grille);
 		}else{
+			
 			verifier = new JButton("verifier");
 			bouton_grille.add(verifier);
 			place_grille.add(bouton_grille);
@@ -128,7 +133,23 @@ public class grille extends JComponent{
 		if (exporter != null) { /* Vérification pour s'assurer que exporter a été initialisé */
 		    exporter.addActionListener(new ActionListener() {
 		        public void actionPerformed(ActionEvent exporter) {
-		            ExporterGrille(ConvertirGrilleActuelle(place_grille));
+		      		for (int i=0; i < 9; i++){
+		      			for (int j=0; j < 9; j++){
+		      				System.out.print(GrilleActuelle(place_grille)[i][j]);
+		      			}
+		      			System.out.println("");
+		      		}
+		        	
+		        	if (!(resolveurGrille.resoudreSudoku(GrilleActuelle(place_grille)))){
+		        		etat_exportation.setHorizontalAlignment(SwingConstants.LEFT);
+		        		etat_exportation.setText("Sudoku Impossible.");
+		        		etat_exportation.setForeground(Color.RED);
+		        		System.out.println(1);
+		        	} else {
+		            	ExporterGrille(GrilleActuelle(place_grille));
+		            	etat_exportation.setText("");
+		            	System.out.println(2);
+		        	}
 		        }
 		    });
 		}
@@ -206,7 +227,7 @@ public class grille extends JComponent{
 		}
 	}
 
-	public static int[][] ConvertirGrilleActuelle(JPanel place_grille){
+	public static int[][] GrilleActuelle(JPanel place_grille){
 		int[][] grilleActuelle = new int[9][9];
 
 	    for (Component comp : place_grille.getComponents()) {

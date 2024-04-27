@@ -17,8 +17,9 @@ public class resolveurGrille {
         return solution;
     }
 
-    private static boolean resoudreSudoku(int[][] grille) {
+    public static boolean resoudreSudoku(int[][] grille) {
         /*parcourage la grille*/
+        stop = false;
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 if (grille[row][col] == 0) {
