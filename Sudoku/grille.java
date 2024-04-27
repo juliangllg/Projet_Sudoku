@@ -96,11 +96,20 @@ public class grille extends JComponent{
 		}
 
 		/*bouton(s) grille(s)*/
+		JButton verifier = null;
+		JButton exporter = null;
 		JPanel bouton_grille = new JPanel();
-		bouton_grille.setSize(300,200);
-		bouton_grille.setLayout(new BorderLayout());
-		JButton verifier = new JButton("verifier");
-		bouton_grille.add(verifier);
+
+		if(editable){
+			exporter = new JButton("exporter");
+			bouton_grille.add(exporter);
+			place_grille.add(bouton_grille);
+		}else{
+			verifier = new JButton("verifier");
+			bouton_grille.add(verifier);
+			place_grille.add(bouton_grille);
+		}
+
 		fenetre.add(bouton_grille,BorderLayout.SOUTH);
 		fenetre.add(place_grille, BorderLayout.CENTER);
 
@@ -109,13 +118,13 @@ public class grille extends JComponent{
 
 		/*System.out.println(grid[0][0].getText());*/
 
-		verifier.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent verifier) {
-			
-			}
-		});
-
-
+		if (verifier != null) { // Vérification pour s'assurer que verifier a été initialisé
+		    verifier.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent verifier) {
+		            
+		        }
+		    });
+		}
 	} 
 
 
