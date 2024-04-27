@@ -81,13 +81,13 @@ public class grille extends JComponent{
 		            	case_depart[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
 		            	case_depart[ligne][col].setHorizontalAlignment(JTextField.CENTER);
 		            	if ((ligne % 3 == 0) && (ligne != 0)){
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
+			            	case_depart[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
 			            } else if ((col % 3 == 0) && (col != 0)){
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
+			            	case_depart[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
 			            } else if ((ligne % 3 == 0) && (ligne != 0) && (col % 3 == 0) && (col != 0)){
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
+			            	case_depart[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
 			            } else {
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
+			            	case_depart[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
 			            }
 		            	place_grille.add(case_depart[ligne][col]);
 		            }
