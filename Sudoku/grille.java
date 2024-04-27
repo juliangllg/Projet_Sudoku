@@ -54,7 +54,6 @@ public class grille extends JComponent{
  		        
 		} else {
 
-		    /*affichage de la grille*/
 			JTextField[][] case_modifiable = null;
 			JLabel[][] case_depart = null;
 			case_depart = new JLabel[9][9];
@@ -118,10 +117,18 @@ public class grille extends JComponent{
 
 		/*System.out.println(grid[0][0].getText());*/
 
-		if (verifier != null) { // Vérification pour s'assurer que verifier a été initialisé
+		if (verifier != null) { /* Vérification pour s'assurer que verifier a été initialisé */
 		    verifier.addActionListener(new ActionListener() {
 		        public void actionPerformed(ActionEvent verifier) {
 		            
+		        }
+		    });
+		}
+
+		if (exporter != null) { /* Vérification pour s'assurer que exporter a été initialisé */
+		    exporter.addActionListener(new ActionListener() {
+		        public void actionPerformed(ActionEvent exporter) {
+		            ExporterGrille(ConvertirGrilleActuelle(place_grille));
 		        }
 		    });
 		}
@@ -166,6 +173,31 @@ public class grille extends JComponent{
 	}
 
 	public static void ExporterGrille(int[][] grille){
+		for (int i = 0; i < grille.length; i++) {
+        	for (int j = 0; j < grille[i].length; j++) {
+            	System.out.print(grille[i][j] + " ");
+        	}
+        	System.out.println(); 
+    	}
+	}
 
+	public static int[][] ConvertirGrilleActuelle(JPanel place_grille){
+		int[][] grilleActuelle = new int[9][9];
+
+	    for (Component comp : place_grille.getComponents()) {
+	        if (comp instanceof JTextField) {
+	            JTextField textField = (JTextField) comp;
+	            String text = textField.getText().trim();
+	            int value = text.isEmpty() ? 0 : Integer.parseInt(text); 
+	            grilleActuelle[place_grille.getComponentZOrder(comp) / 9][place_grille.getComponentZOrder(comp) % 9] = value;
+	        } else if (comp instanceof JLabel) {
+	            JLabel label = (JLabel) comp;
+	            String text = label.getText().trim();
+	            int value = Integer.parseInt(text);
+	            grilleActuelle[place_grille.getComponentZOrder(comp) / 9][place_grille.getComponentZOrder(comp) % 9] = value;
+	        }
+	    }
+
+	    return grilleActuelle;
 	}
 }
