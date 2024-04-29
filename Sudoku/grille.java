@@ -12,6 +12,9 @@ public class grille extends JComponent{
 	/*tableau de valeurs de la grille de sudoku*/
 	public static int[][] grid_values = null; 
 
+	/*Panneau pour la grille */
+	public static JPanel place_grille = new JPanel();
+
 	/*fonction pour afficher graphiquement la grille*/
 	public static void AfficherGrille (int[][] grille, boolean editable) {
 		/*paramètre de base de la fenetre*/
@@ -20,8 +23,7 @@ public class grille extends JComponent{
 		/*fenetre.setResizable(false);*/
 	    fenetre.setLocationRelativeTo(null);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		/*Panneau pour la grille */
-		JPanel place_grille = new JPanel();
+
 		place_grille.setSize(900,900);
 		
 	    /*creation grille*/
@@ -125,7 +127,7 @@ public class grille extends JComponent{
 		if (verifier != null) { /* Vérification pour s'assurer que verifier a été initialisé */
 		    verifier.addActionListener(new ActionListener() {
 		        public void actionPerformed(ActionEvent verifier) {
-		            
+		           	VerificationGrilleFini(); 
 		        }
 		    });
 		}
@@ -135,20 +137,18 @@ public class grille extends JComponent{
 		        public void actionPerformed(ActionEvent exporter) {
 		      		for (int i=0; i < 9; i++){
 		      			for (int j=0; j < 9; j++){
-		      				System.out.print(GrilleActuelle(place_grille)[i][j]);
+		      				System.out.print(GrilleActuelle()[i][j]);
 		      			}
 		      			System.out.println("");
 		      		}
 		        	
-		        	if (!(resolveurGrille.resoudreSudoku(GrilleActuelle(place_grille)))){
+		        	if (!(resolveurGrille.resoudreSudoku(GrilleActuelle()))){
 		        		etat_exportation.setHorizontalAlignment(SwingConstants.LEFT);
 		        		etat_exportation.setText("Sudoku Impossible.");
 		        		etat_exportation.setForeground(Color.RED);
-		        		System.out.println(1);
 		        	} else {
-		            	ExporterGrille(GrilleActuelle(place_grille));
+		            	ExporterGrille(GrilleActuelle());
 		            	etat_exportation.setText("");
-		            	System.out.println(2);
 		        	}
 		        }
 		    });
@@ -227,7 +227,7 @@ public class grille extends JComponent{
 		}
 	}
 
-	public static int[][] GrilleActuelle(JPanel place_grille){
+	public static int[][] GrilleActuelle(){
 		int[][] grilleActuelle = new int[9][9];
 
 	    for (Component comp : place_grille.getComponents()) {
@@ -245,5 +245,15 @@ public class grille extends JComponent{
 	    }
 
 	    return grilleActuelle;
+	}
+
+	public static void VerificationGrilleFini(){
+		int[][] soluce_de_la_grille = new int[9][9];
+		soluce_de_la_grille = resolveurGrille.resoudreGrille(grid_values);
+		if(soluce_de_la_grille != GrilleActuelle()){
+			System.out.println("La grille n'est pas résolue");
+		}
+
+		System.out.println("La grille est resolue !!!");
 	}
 }
