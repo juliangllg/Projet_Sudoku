@@ -9,22 +9,25 @@ JVMFLAGS =
 ### REGLES ESSENTIELLES ###
 
 mainProgramme2.class : mainProgramme2.java menuProgramme2.class
-	${JC} ${JCFLAGS} main.java
+	${JC} ${JCFLAGS} mainProgramme2.java
 
 grille.class : grille.java resolveurGrille.class 
 	${JC} ${JCFLAGS} grille.java
 
 menuProgramme2.class : menuProgramme2.java resolveurGrille.class grille.class
-	${JC} ${JCFLAGS} menu.java
+	${JC} ${JCFLAGS} menuProgramme2.java
 
 resolveurGrille.class : resolveurGrille.java
 	${JC} ${JCFLAGS} resolveurGrille.java
 
 ### REGLES OPTIONNELLES ###
 
-run : mainProgramme2.class
-	${JVM} ${JVMFLAGS} mainProgramme2
+run1 : mainProgramme1.class
+	${JVM} ${JVMFLAGS} mainProgramme1
 
+run2 : mainProgramme2.class
+	${JVM} ${JVMFLAGS} mainProgramme2
+	
 clean :
 	-rm -f *.class
 
