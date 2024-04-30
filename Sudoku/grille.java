@@ -4,7 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import javax.swing.border.Border;
-import javax.swing.text.*;
+import javax.swing.text.PlainDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+
+
 
 public class grille extends JComponent{
 	private static JLabel etat_exportation = new JLabel();
@@ -35,6 +39,13 @@ public class grille extends JComponent{
 			case_editable = new JTextField[9][9];
 			for (int ligne = 0; ligne < 9; ligne++) {
 		        for (int col = 0; col < 9; col++) {
+					case_editable[ligne][col] = new JTextField();
+		        	case_editable[ligne][col].setDocument(new JTextFieldCharLimit(4));
+		        }
+		    }
+
+			for (int ligne = 0; ligne < 9; ligne++) {
+		        for (int col = 0; col < 9; col++) {
 		        	if (grille[ligne][col] == 0){
 		        		case_editable[ligne][col] = new JTextField("", 1);
 		        	}else{
@@ -61,10 +72,12 @@ public class grille extends JComponent{
 			JLabel[][] case_depart = null;
 			case_depart = new JLabel[9][9];
 			case_modifiable = new JTextField[9][9];
-
+			
 		    for (int ligne = 0; ligne < 9; ligne++) {
 		        for (int col = 0; col < 9; col++) {
 		            if ((grid_values[ligne][col]) == 0) {
+
+		       			case_modifiable[ligne][col].setDocument(new JTextFieldCharLimit(4));
 			            case_modifiable[ligne][col] = new JTextField("", 1);
 			            case_modifiable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
 			            case_modifiable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
