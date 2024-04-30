@@ -10,9 +10,15 @@ public class JTextFieldCharLimit extends PlainDocument
       this.max = max;
    }
    public void insertString(int offset, String text, AttributeSet attr) throws BadLocationException {
-      if (text == null)
+      if (text == null){
          return;
-      if ((getLength() + text.length()) <= max) {
+      }
+      StringBuilder sb = new StringBuilder();
+      sb.append(getText(0, getLength())); 
+      sb.insert(offset, text);
+
+      /* Vérifier si le texte ne contient que des chiffres de 1 à 9 et si il ne depasse pas 4 caractères */
+      if (sb.length() <= max && sb.toString().matches("[1-9]*")) {
          super.insertString(offset, text, attr);
       }
    }
