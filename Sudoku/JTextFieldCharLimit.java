@@ -2,17 +2,18 @@ import javax.swing.text.PlainDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 
-public class JTextFieldCharLimit extends PlainDocument{
-	private int limit; 
-
-	public JTextFieldCharLimit(int limit){
-		this.limit = limit;
-	}
-	public void insertString(int offset, String str, AttributeSet set) throws BadLocationException{
-		if (str == null){
-			return;
-		} else if ((getLength() + str.length() - getLength()) <= limit){
-			super.insertString(offset, str, set);
-		}
-	}
+public class JTextFieldCharLimit extends PlainDocument 
+{
+   private int max;
+   JTextFieldCharLimit(int max) {
+      super();
+      this.max = max;
+   }
+   public void insertString(int offset, String text, AttributeSet attr) throws BadLocationException {
+      if (text == null)
+         return;
+      if ((getLength() + text.length()) <= max) {
+         super.insertString(offset, text, attr);
+      }
+   }
 }

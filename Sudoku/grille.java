@@ -37,19 +37,16 @@ public class grille extends JComponent{
 		if(editable){
 			JTextField[][] case_editable = null;
 			case_editable = new JTextField[9][9];
-			for (int ligne = 0; ligne < 9; ligne++) {
-		        for (int col = 0; col < 9; col++) {
-					case_editable[ligne][col] = new JTextField();
-		        	case_editable[ligne][col].setDocument(new JTextFieldCharLimit(4));
-		        }
-		    }
 
 			for (int ligne = 0; ligne < 9; ligne++) {
 		        for (int col = 0; col < 9; col++) {
 		        	if (grille[ligne][col] == 0){
 		        		case_editable[ligne][col] = new JTextField("", 1);
+		        		case_editable[ligne][col].setDocument(new JTextFieldCharLimit(4));
 		        	}else{
-			            case_editable[ligne][col] = new JTextField(String.valueOf(grille[ligne][col]), 1);
+			            case_editable[ligne][col] = new JTextField(1);
+			            case_editable[ligne][col].setDocument(new JTextFieldCharLimit(4));
+			            case_editable[ligne][col].setText(String.valueOf(grille[ligne][col]));
 			        }
 		            case_editable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
 		            case_editable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
@@ -76,9 +73,8 @@ public class grille extends JComponent{
 		    for (int ligne = 0; ligne < 9; ligne++) {
 		        for (int col = 0; col < 9; col++) {
 		            if ((grid_values[ligne][col]) == 0) {
-
-		       			case_modifiable[ligne][col].setDocument(new JTextFieldCharLimit(4));
 			            case_modifiable[ligne][col] = new JTextField("", 1);
+			            case_modifiable[ligne][col].setDocument(new JTextFieldCharLimit(4));
 			            case_modifiable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
 			            case_modifiable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
 			            if ((ligne % 3 == 0) && (ligne != 0) && (col % 3 == 0) && (col != 0)){
