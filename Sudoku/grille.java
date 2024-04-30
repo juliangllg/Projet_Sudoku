@@ -259,13 +259,19 @@ public class grille extends JComponent{
 	    return grilleActuelle;
 	}
 
-	public static void VerificationGrilleFini(){
+	public static boolean VerificationGrilleFini(){
 		int[][] soluce_de_la_grille = new int[9][9];
 		soluce_de_la_grille = resolveurGrille.resoudreGrille(grid_values);
-		if(soluce_de_la_grille != GrilleActuelle()){
-			System.out.println("La grille n'est pas résolue");
-		}
-
+		int[][] gActuelle = GrilleActuelle();
+		for ( int ligne = 0; ligne<9; ligne ++){
+			for (int col = 0; col <9; col++){
+				if(soluce_de_la_grille[ligne][col] != gActuelle[ligne][col]){
+					System.out.println("La grille n'est pas résolue");
+					return false;
+				}
+			}
+		} 
 		System.out.println("La grille est resolue !!!");
+		return true;
 	}
 }

@@ -2,7 +2,6 @@ public class resolveurGrille {
 
     private static int[][] solution = new int[9][9];
     private static boolean stop = false;
-
     public static int[][] resoudreGrille(int[][] grille) {
         /*remise à zéro de la solution*/
         for (int i = 0; i < 9; i++) {
@@ -12,7 +11,6 @@ public class resolveurGrille {
         }
 
         /* Réinitialiser la valeur de stop à chaque début de résolution*/
-        stop = false;
         resoudreSudoku(grille);
         return solution;
     }
@@ -39,7 +37,7 @@ public class resolveurGrille {
             }
         }
 
-        /*copier la grille résolue dans la solution*/
+        /*copier l a grille résolue dans la solution*/
         for (int i = 0; i < 9; i++) {
             System.arraycopy(grille[i], 0, solution[i], 0, 9);
         }
