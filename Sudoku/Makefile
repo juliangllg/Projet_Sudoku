@@ -11,14 +11,23 @@ JVMFLAGS =
 mainProgramme2.class : mainProgramme2.java menuProgramme2.class
 	${JC} ${JCFLAGS} mainProgramme2.java
 
-grille.class : grille.java resolveurGrille.class 
+mainProgramme1.class : mainProgramme1.java menuProgramme1.class
+	${JC} ${JCFLAGS} mainProgramme1.java
+
+grille.class : grille.java resolveurGrille.class JTextFieldCharLimit.class 
 	${JC} ${JCFLAGS} grille.java
 
 menuProgramme2.class : menuProgramme2.java resolveurGrille.class grille.class
 	${JC} ${JCFLAGS} menuProgramme2.java
 
+menuProgramme1.class : menuProgramme1.java resolveurGrille.class grille.class
+	${JC} ${JCFLAGS} menuProgramme1.java
+
 resolveurGrille.class : resolveurGrille.java
 	${JC} ${JCFLAGS} resolveurGrille.java
+
+JTextFieldCharLimit.class : JTextFieldCharLimit.java
+	${JC} ${JCFLAGS} JTextFieldCharLimit.java
 
 ### REGLES OPTIONNELLES ###
 
