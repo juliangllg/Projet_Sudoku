@@ -82,7 +82,7 @@ public class menuProgramme1 {
                 }
 
                 fenetre.dispose();
-                grille.AfficherGrille(grille_vide, true);
+                grille.AfficherGrille(grille_vide, true, false, 0);
             }
         });
 
@@ -93,7 +93,7 @@ public class menuProgramme1 {
                     InfoLogiciel.setForeground(Color.RED);
                 }else{
                     fenetre.dispose();
-                    grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true);
+                    grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true, false, 0);
                 }
             }
         });    

@@ -20,7 +20,7 @@ public class grille extends JComponent{
 	public static JPanel place_grille = new JPanel();
 
 	/*fonction pour afficher graphiquement la grille*/
-	public static void AfficherGrille (int[][] grille, boolean editable) {
+	public static void AfficherGrille (int[][] grille, boolean editable, boolean resolutionManuel, long duree) {
 		/*paramètre de base de la fenetre*/
 		JFrame fenetre = new JFrame();
 		fenetre.setSize(900, 950);
@@ -113,16 +113,19 @@ public class grille extends JComponent{
 
 
 		if(editable){
-			
 			bouton_grille.add(etat_exportation);
 			exporter = new JButton("exporter");
 			bouton_grille.add(exporter);
 			place_grille.add(bouton_grille);
 		}else{
-			
-			verifier = new JButton("verifier");
-			bouton_grille.add(verifier);
-			place_grille.add(bouton_grille);
+			if(resolutionManuel){
+				verifier = new JButton("verifier");
+				bouton_grille.add(verifier);
+				place_grille.add(bouton_grille);
+			}else {
+				JLabel texteTemps = new JLabel("Le programme a mit "+duree+" nanoSecondes pour resoudre la grille");
+				bouton_grille.add(texteTemps);
+			}
 		}
 
 		fenetre.add(bouton_grille,BorderLayout.SOUTH);

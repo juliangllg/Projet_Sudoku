@@ -86,9 +86,15 @@ public class menuProgramme2 {
             	if(cheminFichier != null){
                     if (ResolutionManuel == true) {
 	            	   fenetre.dispose();
-                       grille.AfficherGrille(grille.ChargerGrille(cheminFichier),false);
+                       grille.AfficherGrille(grille.ChargerGrille(cheminFichier),false, true, 0);
                     } else {
-                        grille.AfficherGrille(resolveurGrille.resoudreGrille(grille.ChargerGrille(cheminFichier)),false);
+                        fenetre.dispose();
+                        long debut = System.nanoTime();
+                        int[][] grille_resolue = new int[9][9];
+                        grille_resolue = resolveurGrille.resoudreGrille(grille.ChargerGrille(cheminFichier));
+                        long fin = System.nanoTime();
+                        long duree = fin - debut;
+                        grille.AfficherGrille(grille_resolue,false, false, duree);
                     }
                 } else {
                 	InfoLogiciel.setText(" Info : Erreur : Veuillez selectionner un fichier .gri");
