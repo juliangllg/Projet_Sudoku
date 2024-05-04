@@ -2,33 +2,45 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusAdapter;
 import java.io.*;
-import javax.swing.border.Border;
-import javax.swing.text.PlainDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
 
 
+/**
+ * La classe Grille est une composante Swing pour représenter une grille de Sudoku.
+ *
+ * @author Julian GALLEGO
+ * @author Wilfried BRIGITTE 
+ */
+public class Grille extends JComponent {
+    private static JLabel etat_exportation = new JLabel();
 
-public class grille extends JComponent{
-	private static JLabel etat_exportation = new JLabel();
+    /**
+     * Tableau des valeurs de la grille de Sudoku.
+     */
+    public static int[][] grid_values = null;
 
-	/*tableau de valeurs de la grille de sudoku*/
-	public static int[][] grid_values = null; 
+    /**
+     * Panneau pour la grille.
+     */
+    public static JPanel place_grille = new JPanel();
 
-	/*Panneau pour la grille */
-	public static JPanel place_grille = new JPanel();
+    /**
+     * Fenêtre de l'application.
+     */
+    public static JFrame fenetre = new JFrame();
 
-	/*variable de la fenetre*/
-
-	public static JFrame fenetre = new JFrame();
-
-	/*fonction pour afficher graphiquement la grille*/
+    /**
+     * Affiche graphiquement la grille de Sudoku.
+     *
+     * @param grille           La grille de Sudoku à afficher.
+     * @param editable         Indique si la grille est éditable.
+     * @param resolutionManuel Indique si la résolution est manuelle.
+     * @param duree            La durée de résolution (en nanosecondes).
+     */
 	public static void AfficherGrille (int[][] grille, boolean editable, boolean resolutionManuel, long duree) {
-		/*paramètre de base de la fenetre*/
+		//paramètre de base de la fenetre
 		fenetre.setSize(900, 950);
 		fenetre.setResizable(false);
 	    fenetre.setLocationRelativeTo(null);
@@ -36,13 +48,13 @@ public class grille extends JComponent{
 
 		place_grille.setSize(900,900);
 		
-	    /*creation grille*/
+	    //creation grille
 	    GridLayout gestionnaire = new GridLayout(9,9,-2,-2);
 		place_grille.setLayout(gestionnaire);
 
 		JTextField[][] case_editable = null;
 		case_editable = new JTextField[9][9];
-		/*si la grille peut etre entierement éditée (dans le cas du programme1*/
+		//si la grille peut etre entierement éditée (dans le cas du programme1
 		if(editable){
 
 			for (int ligne = 0; ligne < 9; ligne++) {
@@ -111,12 +123,12 @@ public class grille extends JComponent{
 		    }
 		}
 
-		/*bouton(s) grille(s)*/
+		//bouton(s) grille(s)
 		JButton verifier = null;
 		JButton exporter = null;
 		JPanel bouton_grille = new JPanel();
 
-		/*affichage des boutons en fonction du programme lancé*/
+		//affichage des boutons en fonction du programme lancé
 		if(editable){
 			bouton_grille.add(etat_exportation);
 			exporter = new JButton("exporter");
@@ -136,10 +148,10 @@ public class grille extends JComponent{
 		fenetre.add(bouton_grille,BorderLayout.SOUTH);
 		fenetre.add(place_grille, BorderLayout.CENTER);
 
-		/*affichage fenetre*/
+		//affichage fenetre
 		fenetre.setVisible(true);
 
-		/*verification si un chiffre peut être placé à un endroit*/
+		//verification si un chiffre peut être placé à un endroit
 		for (int ligne = 0; ligne < 9; ligne++) {
 		    for (int col = 0; col < 9; col++) {
 		        final int finalLigne = ligne;
@@ -173,17 +185,27 @@ public class grille extends JComponent{
 		}
 
 
-		/*événement des boutons*/
-		if (verifier != null) { /* Vérification pour s'assurer que verifier a été initialisé */
+		//événement des boutons
+		if (verifier != null) { // Vérification pour s'assurer que verifier a été initialisé 
 		    verifier.addActionListener(new ActionListener() {
+				/**
+				 * verifie votre solution en appuyant sur le bouton verifier
+				 * 
+				 * @param verifier L'évènement d'action.
+				 */
 		        public void actionPerformed(ActionEvent verifier) {
 		           	VerificationGrilleFini(); 
 		        }
 		    });
 		}
 
-		if (exporter != null) { /* Vérification pour s'assurer que exporter a été initialisé */
+		if (exporter != null) { // Vérification pour s'assurer que exporter a été initialisé 
 		    exporter.addActionListener(new ActionListener() {
+				/**
+				 * permet d'exporter votre grille édité.
+				 * 
+				 * @param exporeter
+				 */
 		        public void actionPerformed(ActionEvent exporter) {        	
 		        	if (!(resolveurGrille.resoudreSudoku(GrilleActuelle()))){
 		        		etat_exportation.setHorizontalAlignment(SwingConstants.LEFT);
@@ -199,7 +221,12 @@ public class grille extends JComponent{
 	} 
 
 
-	/*fonction pour passer d'un fichier.gri à un tableau de valeur*/
+	/**
+	 * Charge une grille à partir d'un fichier.
+	 *
+	 * @param cheminFichier Le chemin du fichier contenant la grille.
+	 * @return Un tableau représentant la grille.
+	 */
 	public static int[][] ChargerGrille(String cheminFichier){
 		try {
 			FileInputStream fs = new FileInputStream(cheminFichier);
@@ -236,7 +263,11 @@ public class grille extends JComponent{
 		return null;
 	}
 
-	/*fonction pour exporter une grille en fichier .gri*/
+	/**
+	 * Exporte une grille vers un fichier.
+	 *
+	 * @param grille La grille à exporter.
+	 */
 	public static void ExporterGrille(int[][] grille){
 
 		try {
@@ -270,7 +301,11 @@ public class grille extends JComponent{
 		}
 	}
 
-	/*fonction pour récupérer les valeurs ACTUELLES de la grille est les placer dans un tableau*/
+	/**
+	 * Récupère les valeurs actuelles de la grille et les place dans un tableau.
+	 *
+	 * @return Un tableau représentant la grille actuelle.
+	 */
 	public static int[][] GrilleActuelle(){
 		int[][] grilleActuelle = new int[9][9];
 
@@ -291,7 +326,11 @@ public class grille extends JComponent{
 	    return grilleActuelle;
 	}
 
-	/*fonction pour verifier si la grille actuelle correspond à la grille trouvé en solution*/
+	/**
+	 * Vérifie si la grille actuelle correspond à la grille résolue.
+	 *
+	 * @return true si la grille est résolue correctement, sinon false.
+	 */
 	public static boolean VerificationGrilleFini(){
 		int[][] soluce_de_la_grille = new int[9][9];
 		soluce_de_la_grille = resolveurGrille.resoudreGrille(grid_values);

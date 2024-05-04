@@ -3,14 +3,29 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-
+/**
+ * Menu pour le Programme 2 (Résolveur de Sudoku).
+ * 
+ * @author Julian GALLEGO
+ * @author Wilfried BRIGITTE
+ */
 public class menuProgramme2 {
 
+    /**
+     * designe le chemin du fichier
+     */
     private static String cheminFichier = null;
+    /**
+     * permet de savoir si l'utilisateur veut resoudre le sudoku lui même 
+     * ou si il veut voir la solution
+     */
     private static boolean ResolutionManuel = true;
 
+    /**
+     * Affiche le menu du Programme 2.
+     */
     public static void menuProgramme2() {
-        /*fenetre*/
+        //Création de la fenêtre
         JFrame fenetre = new JFrame();
         fenetre.setSize(500, 250);
         fenetre.setTitle("Sudoku Resolver (By Wilfried BRIGITTE & Julian GALLEGO)");
@@ -20,8 +35,7 @@ public class menuProgramme2 {
         GridLayout gestionnaire = new GridLayout(5,1);
         fenetre.setLayout(gestionnaire);
 
-        /*composants G*/
-
+        //Composants graphique 
         JLabel titre = new JLabel("Sudoku Resolver");
         titre.setHorizontalAlignment(JLabel.CENTER);
         titre.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -58,11 +72,16 @@ public class menuProgramme2 {
         InfoLogiciel.setFont(new Font("Arial", Font.PLAIN, 11));
         fenetre.add(InfoLogiciel);
 
-        /*affichage*/
+        //Affichage de la fenêtre
         fenetre.setVisible(true);
 
         /*evenements*/
         ouvrir.addActionListener(new ActionListener() {
+            /**
+             * Ouvre un sélecteur de fichiers pour choisir un fichier de grille.
+             *
+             * @param e L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e) {
                 try {
                     JFileChooser filechooser = new JFileChooser();
@@ -82,19 +101,24 @@ public class menuProgramme2 {
         });
 
         lancer.addActionListener(new ActionListener() {
+             /**
+             * Lance la résolution du Sudoku en fonction du mode choisi.
+             *
+             * @param e2 L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e2) {
             	if(cheminFichier != null){
                     if (ResolutionManuel == true) {
 	            	   fenetre.dispose();
-                       grille.AfficherGrille(grille.ChargerGrille(cheminFichier),false, true, 0);
+                       Grille.AfficherGrille(Grille.ChargerGrille(cheminFichier),false, true, 0);
                     } else {
                         fenetre.dispose();
                         long debut = System.nanoTime();
                         int[][] grille_resolue = new int[9][9];
-                        grille_resolue = resolveurGrille.resoudreGrille(grille.ChargerGrille(cheminFichier));
+                        grille_resolue = resolveurGrille.resoudreGrille(Grille.ChargerGrille(cheminFichier));
                         long fin = System.nanoTime();
                         long duree = fin - debut;
-                        grille.AfficherGrille(grille_resolue,false, false, duree);
+                        Grille.AfficherGrille(grille_resolue,false, false, duree);
                     }
                 } else {
                 	InfoLogiciel.setText(" Info : Erreur : Veuillez selectionner un fichier .gri");
@@ -104,12 +128,22 @@ public class menuProgramme2 {
         });
 
         quitter.addActionListener(new ActionListener() {
+             /**
+             * Ferme l'application.
+             *
+             * @param e3 L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e3) {
             	System.exit(0);
             }
         });
 
         manuel.addActionListener(new ActionListener() {
+             /**
+             * Définit le mode de résolution manuel.
+             *
+             * @param e1 L'événement d'action.
+             */
             @Override
             public void actionPerformed(ActionEvent e1) {
                 ResolutionManuel = true;
@@ -117,6 +151,11 @@ public class menuProgramme2 {
         });
         
         auto.addActionListener(new ActionListener() {
+             /**
+             * Définit le mode de résolution automatique.
+             *
+             * @param e L'événement d'action.
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 ResolutionManuel = false;

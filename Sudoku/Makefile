@@ -14,13 +14,13 @@ mainProgramme2.class : mainProgramme2.java menuProgramme2.class
 mainProgramme1.class : mainProgramme1.java menuProgramme1.class
 	${JC} ${JCFLAGS} mainProgramme1.java
 
-grille.class : grille.java resolveurGrille.class JTextFieldCharLimit.class JeuFini.class
-	${JC} ${JCFLAGS} grille.java
+Grille.class : Grille.java resolveurGrille.class JTextFieldCharLimit.class JeuFini.class
+	${JC} ${JCFLAGS} Grille.java
 
-menuProgramme2.class : menuProgramme2.java resolveurGrille.class grille.class
+menuProgramme2.class : menuProgramme2.java resolveurGrille.class Grille.class
 	${JC} ${JCFLAGS} menuProgramme2.java
 
-menuProgramme1.class : menuProgramme1.java resolveurGrille.class grille.class
+menuProgramme1.class : menuProgramme1.java resolveurGrille.class Grille.class
 	${JC} ${JCFLAGS} menuProgramme1.java
 
 resolveurGrille.class : resolveurGrille.java
@@ -34,10 +34,10 @@ JeuFini.class : JeuFini.java
 
 ### REGLES OPTIONNELLES ###
 
-run1 : mainProgramme1.class
+editeur : mainProgramme1.class
 	${JVM} ${JVMFLAGS} mainProgramme1
 
-run2 : mainProgramme2.class
+resolveur : mainProgramme2.class
 	${JVM} ${JVMFLAGS} mainProgramme2
 	
 clean :

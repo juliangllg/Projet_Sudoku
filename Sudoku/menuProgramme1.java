@@ -3,13 +3,22 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
-
+/**
+ * Menu pour le Programme 1 (Créateur de Sudoku).
+ * 
+ * @author Julian GALLEGO
+ * @author Wilfried BRIGITTE
+ */
 public class menuProgramme1 {
 
     private static String cheminFichier = null;
 
+    /**
+     * Affiche le menu du Programme 1 qui permet créer et d'editer une grille .
+     */
     public static void menuProgramme1() {
-        /*fenetre*/
+
+        // création de la fenêtre
         JFrame fenetre = new JFrame();
         fenetre.setSize(500, 200);
         fenetre.setTitle("Sudoku Creator (By Wilfried BRIGITTE & Julian GALLEGO)");
@@ -19,8 +28,7 @@ public class menuProgramme1 {
         GridLayout gestionnaire = new GridLayout(4,1);
         fenetre.setLayout(gestionnaire);
 
-        /*composants G*/
-
+        //composants graphique
         JLabel titre = new JLabel("Sudoku Creator");
         titre.setHorizontalAlignment(JLabel.CENTER);
         titre.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -47,11 +55,16 @@ public class menuProgramme1 {
         InfoLogiciel.setFont(new Font("Arial", Font.PLAIN, 11));
         fenetre.add(InfoLogiciel);
 
-        /*affichage*/
+        //affichage de la fenêtre
         fenetre.setVisible(true);
 
-        /*evenements*/
+        //Evenements
         ouvrir.addActionListener(new ActionListener() {
+            /**
+             * Ouvre un sélecteur de fichiers pour choisir un fichier de grille à charger.
+             *
+             * @param e L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e) {
                 try {
                     JFileChooser filechooser = new JFileChooser();
@@ -71,6 +84,11 @@ public class menuProgramme1 {
         });
 
         editerGrilleVierge.addActionListener(new ActionListener(){
+            /**
+             * Crée une grille vide et l'affiche pour l'édition.
+             *
+             * @param e4 L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e4){
                 int[][] grille_vide = null;
                 grille_vide = new int[9][9];
@@ -82,23 +100,33 @@ public class menuProgramme1 {
                 }
 
                 fenetre.dispose();
-                grille.AfficherGrille(grille_vide, true, false, 0);
+                Grille.AfficherGrille(grille_vide, true, false, 0);
             }
         });
 
         editerGrilleSelectionner.addActionListener(new ActionListener(){
+            /**
+             * Charge une grille à partir du fichier sélectionné et l'affiche pour l'édition.
+             *
+             * @param e4 L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e4){
                 if (cheminFichier == null){
                     InfoLogiciel.setText(" Info : Erreur : Veuillez selectionner un fichier .gri");
                     InfoLogiciel.setForeground(Color.RED);
                 }else{
                     fenetre.dispose();
-                    grille.AfficherGrille(grille.ChargerGrille(cheminFichier), true, false, 0);
+                    Grille.AfficherGrille(Grille.ChargerGrille(cheminFichier), true, false, 0);
                 }
             }
         });    
 
         quitter.addActionListener(new ActionListener() {
+            /**
+             * Ferme l'application.
+             *
+             * @param e3 L'événement d'action.
+             */
             public void actionPerformed(ActionEvent e3) {
             	System.exit(0);
             }
