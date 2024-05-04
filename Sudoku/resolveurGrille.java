@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class resolveurGrille {
 
     private static int[][] solution = new int[9][9];
@@ -45,14 +47,13 @@ public class resolveurGrille {
     }
 
     /*Méthode pour vérifier la validité d'un chiffre dans une case donnée*/
-    private static boolean isValid(int[][] grille, int row, int col, int num) {
+    public static boolean isValid(int[][] grille, int row, int col, int num) {
         /*Vérifier la ligne*/
         for (int x = 0; x < 9; x++) {
-            if (grille[row][x] == num) {
-                return false;
+            if (grille[row][x] == num) {                       
+                    return false;
             }
         }
-
         /*Vérifier la colonne*/
         for (int x = 0; x < 9; x++) {
             if (grille[x][col] == num) {
@@ -70,7 +71,6 @@ public class resolveurGrille {
                 }
             }
         }
-
         return true;
     }
 }

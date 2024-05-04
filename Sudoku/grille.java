@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusAdapter;
 import java.io.*;
 import javax.swing.border.Border;
 import javax.swing.text.PlainDocument;
@@ -19,12 +22,15 @@ public class grille extends JComponent{
 	/*Panneau pour la grille */
 	public static JPanel place_grille = new JPanel();
 
+	/*variable de la fenetre*/
+
+	public static JFrame fenetre = new JFrame();
+
 	/*fonction pour afficher graphiquement la grille*/
 	public static void AfficherGrille (int[][] grille, boolean editable, boolean resolutionManuel, long duree) {
 		/*paramètre de base de la fenetre*/
-		JFrame fenetre = new JFrame();
 		fenetre.setSize(900, 950);
-		/*fenetre.setResizable(false);*/
+		fenetre.setResizable(false);
 	    fenetre.setLocationRelativeTo(null);
 	    fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -34,9 +40,10 @@ public class grille extends JComponent{
 	    GridLayout gestionnaire = new GridLayout(9,9,-2,-2);
 		place_grille.setLayout(gestionnaire);
 
+		JTextField[][] case_editable = null;
+		case_editable = new JTextField[9][9];
+		/*si la grille peut etre entierement éditée (dans le cas du programme1*/
 		if(editable){
-			JTextField[][] case_editable = null;
-			case_editable = new JTextField[9][9];
 
 			for (int ligne = 0; ligne < 9; ligne++) {
 		        for (int col = 0; col < 9; col++) {
@@ -65,28 +72,26 @@ public class grille extends JComponent{
  		        
 		} else {
 
-			JTextField[][] case_modifiable = null;
 			JLabel[][] case_depart = null;
 			case_depart = new JLabel[9][9];
-			case_modifiable = new JTextField[9][9];
 			
 		    for (int ligne = 0; ligne < 9; ligne++) {
 		        for (int col = 0; col < 9; col++) {
 		            if ((grid_values[ligne][col]) == 0) {
-			            case_modifiable[ligne][col] = new JTextField("", 1);
-			            case_modifiable[ligne][col].setDocument(new JTextFieldCharLimit(4));
-			            case_modifiable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
-			            case_modifiable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
+			            case_editable[ligne][col] = new JTextField("", 1);
+			            case_editable[ligne][col].setDocument(new JTextFieldCharLimit(4));
+			            case_editable[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
+			            case_editable[ligne][col].setHorizontalAlignment(JTextField.CENTER);
 			            if ((ligne % 3 == 0) && (ligne != 0) && (col % 3 == 0) && (col != 0)){
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
+			            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,5,2,2,Color.BLACK));
 			            } else if ((col % 3 == 0) && (col != 0)){
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
+			            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,5,2,2,Color.BLACK));
 			            } else if ((ligne % 3 == 0) && (ligne != 0)){
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
+			            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(5,2,2,2,Color.BLACK));
 			            }else {
-			            	case_modifiable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
+			            	case_editable[ligne][col].setBorder(BorderFactory.createMatteBorder(2,2,2,2,Color.BLACK));
 			            }
-			            place_grille.add(case_modifiable[ligne][col]);
+			            place_grille.add(case_editable[ligne][col]);
 		            } else {
 		            	case_depart[ligne][col] = new JLabel(String.valueOf(grid_values[ligne][col]));
 		            	case_depart[ligne][col].setFont(new Font("Arial", Font.PLAIN, 30));
@@ -111,7 +116,7 @@ public class grille extends JComponent{
 		JButton exporter = null;
 		JPanel bouton_grille = new JPanel();
 
-
+		/*affichage des boutons en fonction du programme lancé*/
 		if(editable){
 			bouton_grille.add(etat_exportation);
 			exporter = new JButton("exporter");
@@ -134,8 +139,41 @@ public class grille extends JComponent{
 		/*affichage fenetre*/
 		fenetre.setVisible(true);
 
-		/*System.out.println(grid[0][0].getText());*/
+		/*verification si un chiffre peut être placé à un endroit*/
+		for (int ligne = 0; ligne < 9; ligne++) {
+		    for (int col = 0; col < 9; col++) {
+		        final int finalLigne = ligne;
+		        final int finalCol = col; 
 
+		        if (case_editable[ligne][col] != null) {
+		            JTextField textField = case_editable[ligne][col];
+		            textField.addFocusListener(new FocusAdapter() {
+		                @Override
+		                public void focusLost(FocusEvent e) {
+		                	VerificationGrilleFini();
+		                    int[][] currentGrid = GrilleActuelle();
+		                    String input = textField.getText().trim();
+		                    if (!input.isEmpty()) {
+		                        int newValue = Integer.parseInt(input);
+		                        textField.setText("");
+		                        currentGrid = GrilleActuelle();
+		                        if (resolveurGrille.isValid(currentGrid, finalLigne, finalCol, newValue)) {
+		                            // Mettre à jour la grille actuelle avec le nouveau chiffre
+		                            currentGrid[finalLigne][finalCol] = newValue;
+		                            textField.setText(Integer.toString(newValue));
+		                        } else {
+		                            // Le chiffre n'est pas valide, réinitialiser le champ
+		                            textField.setText("");
+		                        }
+		                    }
+		                }
+		            });
+		        }
+		    }
+		}
+
+
+		/*événement des boutons*/
 		if (verifier != null) { /* Vérification pour s'assurer que verifier a été initialisé */
 		    verifier.addActionListener(new ActionListener() {
 		        public void actionPerformed(ActionEvent verifier) {
@@ -146,14 +184,7 @@ public class grille extends JComponent{
 
 		if (exporter != null) { /* Vérification pour s'assurer que exporter a été initialisé */
 		    exporter.addActionListener(new ActionListener() {
-		        public void actionPerformed(ActionEvent exporter) {
-		      		for (int i=0; i < 9; i++){
-		      			for (int j=0; j < 9; j++){
-		      				System.out.print(GrilleActuelle()[i][j]);
-		      			}
-		      			System.out.println("");
-		      		}
-		        	
+		        public void actionPerformed(ActionEvent exporter) {        	
 		        	if (!(resolveurGrille.resoudreSudoku(GrilleActuelle()))){
 		        		etat_exportation.setHorizontalAlignment(SwingConstants.LEFT);
 		        		etat_exportation.setText("Sudoku Impossible.");
@@ -205,6 +236,7 @@ public class grille extends JComponent{
 		return null;
 	}
 
+	/*fonction pour exporter une grille en fichier .gri*/
 	public static void ExporterGrille(int[][] grille){
 
 		try {
@@ -223,7 +255,6 @@ public class grille extends JComponent{
 						ligne_a_ecrire = ligne_a_ecrire+String.valueOf(grille[i][j]);
 					}
                     entier_a_ecrire = Integer.parseInt(ligne_a_ecrire);
-	            	System.out.print(entier_a_ecrire +"\n");
 	            	fichier2.writeInt(entier_a_ecrire);
 	            	ligne_a_ecrire = "";
             	}
@@ -239,6 +270,7 @@ public class grille extends JComponent{
 		}
 	}
 
+	/*fonction pour récupérer les valeurs ACTUELLES de la grille est les placer dans un tableau*/
 	public static int[][] GrilleActuelle(){
 		int[][] grilleActuelle = new int[9][9];
 
@@ -259,6 +291,7 @@ public class grille extends JComponent{
 	    return grilleActuelle;
 	}
 
+	/*fonction pour verifier si la grille actuelle correspond à la grille trouvé en solution*/
 	public static boolean VerificationGrilleFini(){
 		int[][] soluce_de_la_grille = new int[9][9];
 		soluce_de_la_grille = resolveurGrille.resoudreGrille(grid_values);
@@ -266,12 +299,12 @@ public class grille extends JComponent{
 		for ( int ligne = 0; ligne<9; ligne ++){
 			for (int col = 0; col <9; col++){
 				if(soluce_de_la_grille[ligne][col] != gActuelle[ligne][col]){
-					System.out.println("La grille n'est pas résolue");
 					return false;
 				}
 			}
 		} 
-		System.out.println("La grille est resolue !!!");
+		JeuFini.JeuFini();
+		fenetre.dispose();
 		return true;
 	}
 }

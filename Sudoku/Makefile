@@ -14,7 +14,7 @@ mainProgramme2.class : mainProgramme2.java menuProgramme2.class
 mainProgramme1.class : mainProgramme1.java menuProgramme1.class
 	${JC} ${JCFLAGS} mainProgramme1.java
 
-grille.class : grille.java resolveurGrille.class JTextFieldCharLimit.class 
+grille.class : grille.java resolveurGrille.class JTextFieldCharLimit.class JeuFini.class
 	${JC} ${JCFLAGS} grille.java
 
 menuProgramme2.class : menuProgramme2.java resolveurGrille.class grille.class
@@ -28,6 +28,9 @@ resolveurGrille.class : resolveurGrille.java
 
 JTextFieldCharLimit.class : JTextFieldCharLimit.java
 	${JC} ${JCFLAGS} JTextFieldCharLimit.java
+
+JeuFini.class : JeuFini.java
+	${JC} ${JCFLAGS} JeuFini.java
 
 ### REGLES OPTIONNELLES ###
 
